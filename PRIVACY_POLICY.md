@@ -1,6 +1,6 @@
 # Privacy Policy — My Gratitude Jar
 
-**Last updated:** March 4, 2026  
+**Last updated:** March 25, 2026  
 **Effective date:** March 4, 2026
 
 My Gratitude Jar ("the App", "we", "us", or "our") is a personal gratitude journaling application for Android developed by an independent developer. This Privacy Policy explains how we collect, use, store, and protect your information when you use the App.
@@ -27,7 +27,8 @@ By installing or using the App you agree to this Privacy Policy. If you do not a
 | Data | Description |
 |---|---|
 | **Firebase User ID** | A unique, anonymous identifier assigned when you first open the App |
-| **Analytics events** | Non-personal usage events such as app opens, entry counts, and feature interactions (e.g. jar shaken, affirmation completed). No entry text is included. |
+| **Analytics events** | Non-personal usage events such as app opens, entry counts, feature interactions (e.g. jar shaken, affirmation completed), mood check-in values (e.g. "grateful", "anxious"), and time-of-day window (morning/afternoon/evening). No gratitude entry text is included. |
+| **AI usage counters** | A daily count of AI feature uses (prompts generated, suggestions requested) stored per user ID to enforce rate limits. No entry text is stored in these counters. |
 | **Crash & error reports** | Stack traces, device model, OS version, and app state at the time of a crash or error |
 | **Device information** | Browser/device user-agent string (collected only when you submit a bug report) |
 | **Subscription status** | Your subscription tier (free or premium) as managed by Google Play |
@@ -54,8 +55,10 @@ We use the information we collect to:
 - **Fix bugs and crashes** — crash reports help us diagnose and resolve technical issues
 - **Send reminders** — deliver local notifications at your chosen time (never push marketing messages)
 - **Process subscriptions** — manage your premium subscription through Google Play
+- **Generate personalised prompts** — for premium users, your selected mood and the current time of day are sent to Google's Gemini API (server-side) to generate a tailored daily journaling prompt. No gratitude entry text is ever sent to the AI service.
+- **Generate entry suggestions** — if you use the AI suggestion feature, the short mood description you type (up to 500 characters) is sent to Google's Gemini API to generate example gratitude entries.
 
-We **never** use your gratitude entry text, photos, or mood data for advertising, marketing, profiling, or training AI/ML models.
+We **never** use your gratitude entry text or photos for advertising, marketing, profiling, or training AI/ML models. Mood data is sent to the Gemini API solely to generate prompts and suggestions on your behalf; we do not control Google's data use of API inputs — see [Google's Generative AI Terms](https://policies.google.com/privacy) for details.
 
 ---
 
@@ -74,6 +77,7 @@ If you are signed in (including anonymously), the following data is synced to Go
 - User profile (display name, preferences)
 - Liked quotes
 - Bug reports
+- AI usage counters (daily count of AI feature calls per user, stored at `users/{your_id}/aiUsage/{date}`)
 
 Data is stored under your unique user ID at the path `users/{your_id}/...` in Firestore. Photos are stored inline as compressed image data — we do not use a separate file storage service.
 
@@ -97,6 +101,8 @@ The App uses the following third-party services, each with their own privacy pol
 | **Firebase Crashlytics** | Google | Crash & error reporting | [Firebase Privacy](https://firebase.google.com/support/privacy) |
 | **Google Play Billing** | Google | Subscription payments | [Google Privacy Policy](https://policies.google.com/privacy) |
 | **RevenueCat** | RevenueCat Inc. | Subscription management | [RevenueCat Privacy](https://www.revenuecat.com/privacy/) |
+| **Google Gemini API** | Google | AI-generated daily prompts and entry suggestions (premium feature) — receives your selected mood and time of day, or a short mood description you type | [Google Privacy Policy](https://policies.google.com/privacy) |
+| **Open-Meteo** | Open-Meteo | Weather data for the home screen — receives your approximate GPS coordinates to fetch local weather conditions | [Open-Meteo Privacy](https://open-meteo.com/en/terms) |
 
 We do not sell, rent, or share your personal data with any third parties for advertising or marketing purposes.
 
@@ -108,13 +114,13 @@ The App requests the following Android permissions:
 
 | Permission | Why It's Needed |
 |---|---|
-| **Internet** | Connect to Firebase and Google Play for sync, analytics, and subscriptions |
+| **Internet** | Connect to Firebase, Google Play, and the weather and AI services |
 | **Camera** | Take photos to attach to gratitude entries (only when you choose to) |
 | **Photo/media access** | Select photos from your gallery to attach to entries |
-| **Microphone** | Speech recognition for the daily affirmation feature (only when you choose to) |
+| **Microphone & audio settings** | Speech recognition for the daily affirmation feature (only when you choose to) |
 | **Notifications** | Send your daily gratitude reminder at your chosen time |
-| **Exact alarm** | Ensure your reminder fires at the exact time you set |
 | **Boot completed** | Restore your reminder alarm after a device restart |
+| **Location (coarse & fine)** | Fetch local weather conditions for the home screen weather widget. Location is sent directly to Open-Meteo and is never stored on our servers. |
 | **Billing** | Process in-app subscriptions through Google Play |
 
 All permissions are requested at the time of use — the App does not access your camera, microphone, or photos unless you initiate the relevant feature.
